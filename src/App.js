@@ -1,7 +1,15 @@
-export const App = () => {
-  return (
-      <div>
+import './App.css'
+import {Comments, Posts, Users} from "./components";
 
-      </div>
-  )
+export const App = () => {
+    return (
+        <div>
+            <div className={'user-posts'}>
+                <Users/>
+                <Posts/>
+
+            </div>
+            <Comments/>
+        </div>
+    )
 }
