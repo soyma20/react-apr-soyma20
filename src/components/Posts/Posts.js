@@ -1,9 +1,9 @@
+import {Post} from "../Post/Post";
 
-const Posts = () => {
+const Posts = ({posts}) => {
     return (
         <div>
-            Posts
-
+            {posts.map(post=> <Post key={post.id} post={post}/>)}
         </div>
     );
 };

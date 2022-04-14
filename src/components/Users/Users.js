@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {userService} from "../../services";
 import {User} from "../User/User";
 
-const Users = () => {
+const Users = ({setUserDetails, trigger}) => {
     const [users, setUsers] =useState([]);
 
     useEffect(()=>{
@@ -12,7 +12,7 @@ const Users = () => {
 
     return (
         <div>
-            {users.map(user=><User key={user.id} user={user}/>)}
+            {users.map(user=><User key={user.id} user={user} setUserDetails={setUserDetails} trigger={trigger}/>)}
 
         </div>
     );
