@@ -3,11 +3,12 @@ import {userService} from "../../services";
 import {User} from "../User/User";
 
 const Users = () => {
-    const {users, setUsers}=useState([]);
+    const [users, setUsers] =useState([]);
 
     useEffect(()=>{
         userService.getAll().then(({data})=>setUsers(data))
-    })
+    },[])
+    console.log(users)
 
     return (
         <div>
