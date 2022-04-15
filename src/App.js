@@ -3,6 +3,7 @@ import {useState} from "react";
 
 export const App = () => {
     const [newCar, setNewCar] = useState(null);
+    // const [updatedCar, setUpdatedCar]= useState(null);
     const [carForUpadate,setCarForUpdate] = useState(null);
 
   return (

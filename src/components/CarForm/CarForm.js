@@ -23,8 +23,15 @@ const CarForm = ({setNewCar, carForUpadate}) => {
 
     const submit = async (car) => {
         try{
-            const {data} = await carService.create(car);
-            setNewCar(data)
+            if (carForUpadate){
+                const {data} = await carService.updateById(carForUpadate.id,car);
+                setNewCar(data)
+
+            }else {
+                const {data} = await carService.create(car);
+                setNewCar(data)
+            }
+
             reset()
 
         }catch (e){
