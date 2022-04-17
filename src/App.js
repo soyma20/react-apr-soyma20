@@ -1,4 +1,6 @@
 import {Route,Routes,Navigate} from "react-router-dom"
+
+import './App.css';
 import {MainLayout} from "./pages/layouts";
 import {AboutPage, HomePage, NotFoundPage, PostsPage, SinglePostPage, SingleUserPage, UsersPage} from "./pages";
 
