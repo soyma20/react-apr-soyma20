@@ -1,19 +1,25 @@
 import {useEffect, useState} from "react";
-import {Outlet} from "react-router-dom"
+import {Outlet, useParams} from "react-router-dom"
 
 import {postService} from "../../services";
 import {Post} from "../../components";
 
 const PostsPage = () => {
     const [posts, setPosts] = useState([]);
+    const {userId} = useParams();
 
     useEffect(()=>{
-        postService.getAll().then(({data})=>setPosts(data))
-    },[])
+        if (userId){
+            postService.getByUserID(userId).then(({data})=>setPosts(data))
+        }else {
+            postService.getAll().then(({data})=>setPosts(data))
+
+        }
+    },[userId])
 
     return (
         <div style={{display:'flex'}}>
-            <div>{posts.map(post => <Post key={post.id} post={post}/>)}</div>
+            <div>{posts.map(post => <Post key={post.id} post={post} flag={!userId}/>)}</div>
             <div><Outlet/></div>
         </div>
     );
