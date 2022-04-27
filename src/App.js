@@ -1,57 +1,78 @@
-import {useReducer} from "react";
+import {useReducer, useState} from "react";
+
+import './App.css'
 
 const reducer = (state, action) => {
-    const {type} = action;
-    console.log(type)
+    const {type, payload} = action;
+
     switch (type) {
-        case 'inc1':
-            return {...state, counter1: state.counter1+1}
-        case 'inc2':
-            return {...state, counter2: state.counter2+1}
-        case 'inc3':
-            return {...state, counter3: state.counter3+1}
+        case 'addCat':
+            return {...state, cats: [...state.cats, {name: payload, id: Date.now()}]}
+        case 'deleteCat':
+            return {...state, cats: state.cats.filter(cat => cat.id !== payload)}
 
-        case 'dec1':
-            return {...state, counter1: state.counter1-1}
-        case 'dec2':
-            return {...state, counter2: state.counter2-1}
-        case 'dec3':
-            return {...state, counter3: state.counter3-1}
+        case 'addDog':
+            return {...state, dogs: [...state.dogs, {name: payload, id: Date.now()}]}
+        case 'deleteDog':
+            return {...state, dogs: state.dogs.filter(dog => dog.id !== payload)}
 
-        case 'reset1':
-            return {...state, counter1: 0}
-        case 'reset2':
-            return {...state, counter2: 0}
-        case 'reset3':
-            return {...state, counter3: 0}
+
         default:
-            return  state;
+            return state;
     }
 }
 
 export const App = () => {
-    const [state, dispatch] = useReducer(reducer, {counter1: 0, counter2: 0, counter3: 0,});
+    const [state, dispatch] = useReducer(reducer, {cats: [], dogs: []});
+    const [catValue, setCatValue] = useState('');
+    const [dogValue, setDogValue] = useState('');
+
+    const createCat = () => {
+        dispatch({type: 'addCat', payload: catValue});
+        setCatValue('');
+    }
+    const createDog = () => {
+        dispatch({type: 'addDog', payload: dogValue});
+        setDogValue('');
+    }
+
+
     return (
         <div>
-            <div>
-                <div>Counter #1 : {state.counter1}</div>
-                <button onClick={() => dispatch({type: 'inc1'})}>inc</button>
-                <button onClick={() => dispatch({type: 'dec1'})}>dec</button>
-                <button onClick={() => dispatch({type: 'reset1'})}>reset</button>
+            <div className={'header'}>
+
+                <div><label>Cat name : <input type="text"
+                                              onChange={({target}) => setCatValue(target.value)}
+                                              value={catValue}/></label>
+                    <button onClick={createCat}>Save</button>
+                    <label>Dog name : <input type="text"
+                                             onChange={({target}) => setDogValue(target.value)}
+                                             value={dogValue}/></label>
+                    <button onClick={createDog}>Save</button>
+                </div>
             </div>
             <hr/>
-            <div>
-                <div>Counter #2 : {state.counter2}</div>
-                <button onClick={() => dispatch({type: 'inc2'})}>inc</button>
-                <button onClick={() => dispatch({type: 'dec2'})}>dec</button>
-                <button onClick={() => dispatch({type: 'reset2'})}>reset</button>
-            </div>
-            <hr/>
-            <div>
-                <div>Counter #3 : {state.counter3}</div>
-                <button onClick={() => dispatch({type: 'inc3'})}>inc</button>
-                <button onClick={() => dispatch({type: 'dec3'})}>dec</button>
-                <button onClick={() => dispatch({type: 'reset3'})}>reset</button>
+            <div className={'body'}>
+                <div>
+                    {
+                        state.cats.map(cat => (
+                            <div key={cat.id}>
+                                {cat.name}
+                                <button onClick={() => dispatch({type: 'deleteCat', payload: cat.id})}>Delete</button>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div>
+                    {
+                        state.dogs.map(dog => (
+                            <div key={dog.id}>
+                                {dog.name}
+                                <button onClick={() => dispatch({type: 'deleteDog', payload: dog.id})}>Delete</button>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
 
         </div>
