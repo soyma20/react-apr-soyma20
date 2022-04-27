@@ -9,6 +9,7 @@ const Cat = ({cat}) => {
         <div>
             {cat.name}
             <button onClick={() => dispatch(actionsCat.setCatForUpdate({cat})) }>Update</button>
+
             <button onClick={() => dispatch(actionsCat.deleteCat({id:cat.id})) }>Delete</button>
         </div>
     );
