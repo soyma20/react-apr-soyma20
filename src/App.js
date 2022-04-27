@@ -41,13 +41,9 @@ export const App = () => {
         <div>
             <div className={'header'}>
 
-                <div><label>Cat name : <input type="text"
-                                              onChange={({target}) => setCatValue(target.value)}
-                                              value={catValue}/></label>
+                <div><label>Cat name : <input type="text" onChange={({target}) => setCatValue(target.value)} value={catValue}/></label>
                     <button onClick={createCat}>Save</button>
-                    <label>Dog name : <input type="text"
-                                             onChange={({target}) => setDogValue(target.value)}
-                                             value={dogValue}/></label>
+                    <label>Dog name : <input type="text" onChange={({target}) => setDogValue(target.value)} value={dogValue}/></label>
                     <button onClick={createDog}>Save</button>
                 </div>
             </div>
