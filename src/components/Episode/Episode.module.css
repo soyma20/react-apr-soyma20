@@ -1,0 +1,12 @@
+.Episode{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 200px;
+}
+.Episode:hover{
+    cursor: pointer;
+    background-color: #cdf5f5;
+}

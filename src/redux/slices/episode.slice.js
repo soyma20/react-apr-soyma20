@@ -5,13 +5,14 @@ let initialState ={
     pages:null,
     next:null,
     prev:null,
-    episodes:[]
+    episodes:[],
+    currentEpisode:null
 };
 
 const getAll = createAsyncThunk(
     'episodeSlice/getAll',
-    async ()=>{
-        const {data} = await episodeService.getAll();
+    async ({page})=>{
+        const {data} = await episodeService.getAll(page);
         return data
     }
 );
@@ -19,10 +20,16 @@ const getAll = createAsyncThunk(
 const episodeSlice = createSlice({
     name:'episodeSlice',
     initialState,
+    reducers:{
+        currentEpisode:(state, action) => {
+            const {episodeName} = action.payload;
+            state.currentEpisode=episodeName
+        }
+    },
     extraReducers:(builder  )=>{
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {pages, next, prev, results} = action.payload;
+                const { info:{pages, next, prev}, results} = action.payload;
                 state.pages=pages;
                 state.next = next;
                 state.prev = prev;
@@ -32,10 +39,11 @@ const episodeSlice = createSlice({
     }
 });
 
-const {reducer:episodeReducer} = episodeSlice;
+const {reducer:episodeReducer, actions:{currentEpisode}} = episodeSlice;
 
 const episodeActions = {
-    getAll
+    getAll,
+    currentEpisode
 }
 
 export {
