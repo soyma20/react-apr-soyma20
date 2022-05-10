@@ -22,9 +22,9 @@ axiosService.interceptors.response.use(
         return config
     },
     async (error) => {
-        if (error.response?.status === 401 && error.config && !isRefreshing) {
+        const refreshToken = localStorage.getItem('refresh');
+        if (error.response?.status === 401 && error.config && !isRefreshing && refreshToken) {
             isRefreshing = true
-            const refreshToken = localStorage.getItem('refresh');
             try {
                 const {data} = await authService.refresh(refreshToken);
                 const {access, refresh} = data;
@@ -33,10 +33,15 @@ axiosService.interceptors.response.use(
             } catch (e) {
                 localStorage.clear()
                 history.replace('/login?expSesion=true')
-                isRefreshing = false
             }
+            isRefreshing = false
             return axiosService.request(error.config)
         }
-    })
+        return Promise.reject(error)
+    }
+)
 
-export {axiosService}
+export {
+    axiosService,
+    history
+}
