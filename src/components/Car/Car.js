@@ -5,6 +5,7 @@ const Car = ({car:{id, model, price, year}}) => {
             <div>{model}</div>
             <div>{price}</div>
             <div>{year}</div>
+            <hr/>
         </div>
     );
 };
