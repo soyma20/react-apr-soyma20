@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {carActions} from "../../redux";
 
 const Cars = () => {
-    const {cars, status} = useSelector(state => state.cars);
+    const {cars} = useSelector(state => state.cars);
     const dispatch = useDispatch();
 
     useEffect(()=>{

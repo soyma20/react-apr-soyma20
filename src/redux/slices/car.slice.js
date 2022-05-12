@@ -6,11 +6,11 @@ let initialState = {
     status:null
 };
 
-const create = createAsyncThunk(
+const createAsync = createAsyncThunk(
     'create',
-    async (car)=>{
+    async ({car},{dispatch})=>{
         const {data} = await carService.create(car)
-        return data
+        dispatch(create(car:data))
     }
 
 );
@@ -25,11 +25,14 @@ const getAll = createAsyncThunk(
 const carSlice = createSlice({
     name:'carSlice',
     initialState,
-    reducers:{},
+    reducers:{
+        create:(state, action) => {
+            state.cars.push(action.payload.car)
+        }
+    },
     extraReducers:(builder => {
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                state.status = 'completed'
                 state.cars = action.payload
             })
     })
@@ -37,10 +40,10 @@ const carSlice = createSlice({
 
 
 
-const {reducer:carReducer, actions} = carSlice;
+const {reducer:carReducer, actions:{create}} = carSlice;
 
 const carActions ={
-    create,
+    createAsync,
     getAll
 };
 
