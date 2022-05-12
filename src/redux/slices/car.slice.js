@@ -7,10 +7,11 @@ let initialState = {
 };
 
 const createAsync = createAsyncThunk(
-    'create',
-    async ({car},{dispatch})=>{
+    'createAsync',
+    async (car,{dispatch})=>{
         const {data} = await carService.create(car)
-        dispatch(create(car:data))
+        dispatch(create({car: data}))
+        return data
     }
 
 );
