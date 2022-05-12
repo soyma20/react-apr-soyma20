@@ -3,7 +3,7 @@ import {authReducer, carReducer} from "./slices";
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    carr: carReducer
+    cars: carReducer
 
 });
 
